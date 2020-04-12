@@ -36,4 +36,4 @@
 	$response .= "<br/><br/><a href=../>Go Back</a>";
 
 	echo $response;
-?>
+

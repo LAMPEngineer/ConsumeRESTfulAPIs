@@ -1,11 +1,7 @@
 <?php
 
 /*
- *  Class item controller to have actions for items
- *  
- *  @date       Tuesday, Apr 07, 2020
- *  @author     G PRASAD <LAMP.Engineer@gmail.com>
- *  @modified   Thursday, Apr 09, 2020
+ *  Class item controller to have CURD actions for items
  *
  */
 class ItemController
@@ -24,12 +20,10 @@ class ItemController
 	private $url='';
 
 
-
-
 	/**
 	 * Class cunstructur
 	 * 
-	 * @paaram string url 		URL to call api 
+	 * @paaram string url URL to call api 
 	 */
 
 	function __construct($url='')
@@ -50,16 +44,14 @@ class ItemController
 	 *         error 	if item is not available
 	 */
 	public function showItemsWithActions()
-	{
-	
-		if(is_array($this->items)){
-			  
+	{	
+		if(is_array($this->items)){			  
 
 				include(__DIR__.'/../../view/itemlist.php');
 
 			} else {
 				
-			echo "<p>Error: ".$this->items ."</p>";
+				return "<p>Error: ".$this->items ."</p>";
 
 			}
 			
@@ -69,8 +61,8 @@ class ItemController
 	 * Function to show one individual item 
 	 * 
 	 * @param  int $itemId item id
-	 * @return string 	details of item
-	 *         error 	if item is not available
+	 * @return string view template
+	 *         error if item is not available
 	 */
 	public function showItem($itemId)
 	{
@@ -79,10 +71,15 @@ class ItemController
 
 		include(__DIR__.'/../../view/showitem.php');
 
-		//return $response;
 	}
 
-
+	/**
+	 * Function to get data and pass it 
+	 * to pre filled edit form
+	 * 
+	 * @param  int $itemId item id
+	 * @return string view template
+	 */
 	public function editItem($itemId)
 	{
 		// get item array for itemId
@@ -92,8 +89,14 @@ class ItemController
 
 	}
 
-
-	public function updateItem($postArray, $url)
+	/**
+	 * Function to call update api with data
+	 * 
+	 * @param  array  $postArray post data
+	 * @param  string $url       api url
+	 * @return string            response
+	 */
+	public function updateItem($postArray, $url):string
 	{
 		$arrUpdateItem = (object)array(
 					'id' => $postArray['id'],
@@ -101,64 +104,59 @@ class ItemController
 					'description' => $postArray['description']
 		);
 
-		echo "API call to update= <b>".$url."</b>";
-		echo "<pre>";
-		print_r($arrUpdateItem);
-		echo "</pre>";
-
 		$data = json_encode($arrUpdateItem );
 
-		echo "JSON Data = ".$data;
-
-/*		//object of comsume api
+		//object of comsume api
 		 $consumeapi = new Consume($this->url, 'PUT', $data);
 
 		 //call api and get response
-		 $response = $consumeapi->callAPI();*/
+		 $response = $consumeapi->callAPI();
 
-		echo "<br/><br/><a href=../>Go Back</a>";
-
+		 return $response;
 
 	}
 
-
-	public function deleteItem($itemId, $url)
+	/**
+	 * Function to delete an item
+	 * 
+	 * @param  int $itemId    item id
+	 * @param  string $url    api url    
+	 * @return string         response
+	 */
+	public function deleteItem($itemId, $url):string
 	{
 
 		// get item array for the item id
 		$arrItem = $this->getItemArray($itemId);
 
-		echo "API call to delete= <b>".$url."</b>";
-		echo "<pre>";
-		print_r($arrItem);
-		echo "</pre>";
-
 		$data = json_encode($arrItem );
 
-		echo "JSON data = ".$data;
-
-/*		//object of comsume api
+		//object of comsume api
 		 $consumeapi = new Consume($this->url, 'DELETE', $data);
 
 		 //call api and get response
-		 $response = $consumeapi->callAPI();*/
+		 $response = $consumeapi->callAPI();
 
-		echo "<br/><br/><a href=../>Go Back</a>";
-
+		 return $response;
+	
 	}
 
-
+	/**
+	 * Function to populate add item form
+	 * 
+	 */
 	public function addItem()
 	{
-
-
 		include(__DIR__.'/../../view/additem.php');
-
-		//echo "<br/><br/><a href=../>Go Back</a>";
-
-
 	}
 
+	/**
+	 * Function to call create api with data
+	 * 
+	 * @param  array $postArray  post data
+	 * @param  string $url       api url
+	 * @return string            response
+	 */
 	public function createItem($postArray, $url)
 	{
 		$arrCreateItem = (object)array(					
@@ -166,24 +164,16 @@ class ItemController
 					'description' => $postArray['description']
 		);
 
-		echo "API call to create= <b>".$url."</b>";
-		echo "<pre>";
-		print_r($arrCreateItem);
-		echo "</pre>";
-
 		$data = json_encode($arrCreateItem );
 
-		echo "JSON Data = ".$data;
 
-/*		//object of comsume api
+		//object of comsume api
 		 $consumeapi = new Consume($url, 'POST', $data);
 
 		 //call api and get response
-		 $response = $consumeapi->callAPI();*/
+		 $response = $consumeapi->callAPI();
 
-		echo "<br/><br/><a href=../>Go Back</a>";
-
-
+		 return $response;
 	}
 
 	/**
@@ -227,12 +217,11 @@ class ItemController
 				
 			}
 
-			//include(__DIR__.'/../../view/item.php');
 		return $arrItem;
 			
 		} else {
 
-			echo "<p>Error: ". $this->items."</p>";
+			return "<p>Error: ". $this->items."</p>";
 		}
 
 	}

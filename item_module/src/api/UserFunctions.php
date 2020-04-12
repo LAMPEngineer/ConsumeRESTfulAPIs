@@ -1,12 +1,6 @@
 <?php
-//namespace api;
-
 /*
  *  Class for global user functions 
- *  
- *  @date       Thuresday, Apr 02, 2020
- *  @author     G PRASAD <LAMP.Engineer@gmail.com>
- *  @modified   Friday, Apr 03, 2020
  *
  */
 class UserFunctions

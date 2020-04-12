@@ -1,14 +1,6 @@
 <?php
-/*namespace api;
-
-use \api\UserFunctions as UserFunctions;
-*/
 /*
  *  Class to consume APIs 
- *  
- *  @date       Thuresday, Apr 02, 2020
- *  @author     G PRASAD <LAMP.Engineer@gmail.com>
- *  @modified   Friday, Apr 03, 2020
  *
  */
 class Consume
@@ -80,15 +72,12 @@ class Consume
 
     	//if success i.e 1
     	if($response->status){
-
     				//data
     		return $response->data;
 
     	} else {
-
     				//error message
     		return $response->message;
-
     	}
 
 

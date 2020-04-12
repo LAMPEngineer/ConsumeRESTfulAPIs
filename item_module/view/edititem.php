@@ -1,6 +1,4 @@
 <?php 
-
-
 	echo " <h1>Edit Item</h1>
 		<form method=\"post\" action=\"./../update/$arrItem->id\" >	  
 			<input type=\"hidden\" name=\"id\" value=\"$arrItem->id\">

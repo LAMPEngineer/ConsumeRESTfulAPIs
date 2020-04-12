@@ -1,6 +1,4 @@
 <?php 
-
-
 	echo "<h1>Add Item</h1>
 		<form method=\"post\" action=\"./../cerate/\" >	  
 			

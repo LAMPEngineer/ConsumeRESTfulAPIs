@@ -1,13 +1,9 @@
 <?php
 /**
- * Request handler for item module
+ * Request handler
  *
  * All request comes here and this file respond 
  * back the client
- * 
- *  @date       Tuesday, Apr 07, 2020
- *  @author     G PRASAD <LAMP.Engineer@gmail.com>
- *  @modified   Friday, Apr 10, 2020
  * 
  */
 
@@ -122,6 +118,6 @@ if($url_array[0]=='item_module'){
 } else{
 
 	//redirect to home
-	header('Location: http://gprasad.digitalhorizons.net/');
+	header('Location: http://localhost:9080/');
 	exit;
 }
