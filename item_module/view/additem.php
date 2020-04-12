@@ -14,5 +14,3 @@
 					<button type=\"submit\" name=\"\" >Create</button>
 				</div>
 		</form>";
-
-?>
