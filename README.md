@@ -6,4 +6,4 @@ Use case is - list items, show detail of an item, edit item info and user could 
 
 # Built
 
-App is build on core PHP 7.2.5, no data base and no any third party tools has been used.
+App is built on core PHP 7.2.5, no data base and no any third party tools has been used.
