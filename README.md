@@ -9,6 +9,6 @@ Use case is - list items, show detail of an item, edit item info and user could 
 App is built on core PHP 7.2.5, no data base and no any third party tools has been used.
 
 
-# Flow
+# Architecture
 
 ![flow_diagram.jpg](img/flow_diagram.jpg)
