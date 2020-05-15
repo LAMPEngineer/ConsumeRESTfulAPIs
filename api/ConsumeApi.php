@@ -32,12 +32,18 @@ class ConsumeApi
 		 		break;
 
 		 	case 'PUT':
-		 		curl_setopt($client, CURLOPT_PUT, 1);
+		 		curl_setopt($client, CURLOPT_CUSTOMREQUEST, "PUT");
+				curl_setopt($client, CURLOPT_POSTFIELDS, http_build_query($data));
+		 		break;
+
+		 	case 'PATCH':		 		
+		 		curl_setopt($client, CURLOPT_CUSTOMREQUEST, "PATCH");
+				curl_setopt($client, CURLOPT_POSTFIELDS, http_build_query($data));
 		 		break;
 
 		 	default:
 		 		if($data)
-		 			$sprintf("%s?%s", $url, http_build_query($data));
+		 			sprintf("%s?%s", $url, http_build_query($data));
 		 		break;
 		 }
 

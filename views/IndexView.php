@@ -12,14 +12,12 @@ class IndexView
 	 */
 	public function render($content)
 	{
-/*		header('Content-Type: application/json charset=utf8');
-		echo json_encode($content);
-		return true;*/
 
 		$response = "<h1>Item List</h1>
 					<table>
 						<thead>
 							<tr>
+								<th><u>#</u></th>
 								<th><u>Item</u></th>
 								<th><u>Action 1</u></th>
 								<th><u>Action 2</u></th>
@@ -27,9 +25,11 @@ class IndexView
 							</tr>
 						</thead>
 						<tbody>";
+							$i=0;
 							foreach ($content as $resource) {
 								
 				   $response .= "<tr>
+				   					<td>".++$i."</td>
 									<td>".$resource->name."</td>
 									<td>				
 										<a href='./items/get/".$resource->id."'>Show</a>
@@ -49,8 +49,6 @@ class IndexView
 
 	
 		$response .= "<br/><br/><a href=./items/add/>Add An Item</a>";
-
-		$response .= "<br/><br/><a href=../>Go Back</a>";
 
 		return $response;
 	}

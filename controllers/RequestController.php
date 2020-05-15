@@ -80,7 +80,7 @@ class RequestController
 	 * 
 	 * @return string  to view as output
 	 */
-	private function requestRoute(): string
+	private function requestRoute()
 	{
 		// check if controller exists
 		if(class_exists($this->controller_name)){

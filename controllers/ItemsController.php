@@ -5,40 +5,104 @@
  */
 class ItemsController extends MyController
 {
+	public $url;
+
 	/**
 	 * to get all items by api call
-	 * and list it to view
+	 * and list it in view template
 	 * 
 	 * @return string view HTML
 	 */
 	public function indexAction(): string
 	{
-		$api_handler = ucfirst('Handle') . 'Api';
-		
-		if(class_exists($api_handler)){
 
-			$url = $this->config::ITEM_API_URL;			
-			$method = 'GET';
-
-			// get api handler
-			$apihandler = new $api_handler($url, $method);
-		} 
+		$url = $this->config::ITEM_API_URL;			
+		$method = 'GET';
 		
 		// api call
-		$content = $apihandler->callAPI();
+		$content = $this->apihandler->callAPI($url, $method);
 
 		// get view and render
-		$view = $this->getView('index');
-		$response= $view->render($content);
-
+		$response = $this->getView('index', $content);
+	
 		return $response;
 
 	}
 
-	public function getAction($view, $resource_id)
+	/**
+	 * to get item by api call
+	 * and show it in view template
+	 * 
+	 * @return string view HTML
+	 */
+	public function getAction($resource_id): string
 	{
-		$response = array('message' => 'you requested to list item ID = '.$resource_id,'status' => '1');
+		$url = $this->config::ITEM_API_URL;	
+		$url .= '/'.$resource_id;		
+		$method = 'GET';
+		
+		// api call
+		$content = $this->apihandler->callAPI($url, $method);
+
+		// get view and render
+		$response = $this->getView('get', $content);
+	
+		return $response;
+	}
+
+	/**
+	 * to edit item by id. it pre populate data it in view template
+	 * once post, it goes to update action
+	 * 
+	 * @return string view HTML
+	 */
+	public function editAction($resource_id): string
+	{
+		$url = $this->config::ITEM_API_URL.'/'.$resource_id;	
+		$method = 'GET';
+		
+		// api call
+		$content = $this->apihandler->callAPI($url, $method);
+
+		// get view and render
+		$response = $this->getView('edit', $content);
 
 		return $response;
 	}
+
+
+	/**
+	 * after submit edited data comes here for update action
+	 * it sends data through api handler
+	 * 
+	 * @return string view HTML
+	 */
+	public function updateAction(): string
+	{
+		if(!empty($_POST)){
+
+			// collect POST data and make data array
+			$itemid = (int)$_POST['id'];
+			$data['id'] = $itemid;
+			$data['name'] = htmlspecialchars(strip_tags($_POST['name']));
+			$data['description'] = htmlspecialchars(strip_tags($_POST['description']));
+
+			// HTTP method
+			$method = 'PATCH';
+
+			// URL to api call
+			$url = $this->config::ITEM_API_URL.'/'.$itemid;
+
+			// api call
+			$response = $this->apihandler->callAPI($url, $method, $data);
+
+		}
+
+		$response .= "<br/><br/><a href=./../items/get/".$itemid.">Show updated item</a>";
+
+		return $response;
+	}
+
+
+
 }

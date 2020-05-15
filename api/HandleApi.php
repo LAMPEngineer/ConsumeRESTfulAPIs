@@ -30,23 +30,6 @@ class HandleApi
 	 */
 	private $data = [];
 
-	/**
-	 * Class cunstructur
-	 * 
-	 * @paaram string url for API call
-	 */
-
-	function __construct($url, $method, $data = false){
-
-		$this->url = $url;
-
-		$this->method = $method;
-
-		$this->data = $data;
-
-
-	}
-
 
 	/**
 	 * Call API with url. This uses cURL to call api.
@@ -56,8 +39,14 @@ class HandleApi
 	 *         
 	 * @catch exception if fails.
 	 */
-	public function callAPI()
+	public function callAPI($url, $method, $data = false)
     {
+
+		$this->url = $url;
+
+		$this->method = $method;
+
+		$this->data = $data;
 
     	// curl client class
     	$consumeapi = new ConsumeApi();
@@ -72,8 +61,9 @@ class HandleApi
 
     	//if success i.e 1
     	if($response->status){
-    				//data
-    		return $response->data;
+    		//data
+    		$return = (!empty($response->data))?$response->data:$response->message;
+    		return $return;
 
     	} else {
     				//error message

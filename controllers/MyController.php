@@ -12,6 +12,13 @@ class MyController
 	public $config='';
 
 	/**
+	 * to hold object of Handle API
+	 * 
+	 * @var object
+	 */
+	public $apihandler;
+
+	/**
 	 * initialize config 
 	 */
 	public function __construct()
@@ -19,15 +26,18 @@ class MyController
 		// config 		
 		$this->config = ucfirst('property') . 'Config';
 
+		$this->apiHandle();
+
 	}
 
 	/**
 	 * to get view object
 	 * 
 	 * @param  string $view_name 
-	 * @return object         
+	 * @param  array  $content
+	 * @return string HTML       
 	 */
-	public function getView(string $view_name): object
+	public function getView(string $view_name, $content=null): string
 	{
 		// view 
 		$view_name = ucfirst($view_name) . 'View';
@@ -37,8 +47,25 @@ class MyController
 			$view = new $view_name();	
 		}
 
-		return $view;
+		$response = $view->render($content);
 
+		return $response;
+
+	}
+
+	/**
+	 * create object of api handler 
+	 * 
+	 * @return void
+	 */
+	public function apiHandle(): void
+	{
+		$api_handler = ucfirst('Handle') . 'Api';
+		
+		if(class_exists($api_handler)){
+			// get api handler
+			$this->apihandler = new $api_handler();
+		} 
 	}
 
 }
