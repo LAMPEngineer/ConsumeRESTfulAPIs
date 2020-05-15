@@ -5,7 +5,6 @@
  */
 class ItemsController extends MyController
 {
-	public $url;
 
 	/**
 	 * to get all items by api call
@@ -32,10 +31,12 @@ class ItemsController extends MyController
 	/**
 	 * to get item by api call
 	 * and show it in view template
+	 *
+	 * @param  int  $resource_id
 	 * 
 	 * @return string view HTML
 	 */
-	public function getAction($resource_id): string
+	public function getAction($resource_id)
 	{
 		$url = $this->config::ITEM_API_URL;	
 		$url .= '/'.$resource_id;		
@@ -45,7 +46,7 @@ class ItemsController extends MyController
 		$content = $this->apihandler->callAPI($url, $method);
 
 		// get view and render
-		$response = $this->getView('get', $content);
+		$response = (is_object($content))? $this->getView('get', $content) : $content;
 	
 		return $response;
 	}
@@ -53,6 +54,8 @@ class ItemsController extends MyController
 	/**
 	 * to edit item by id. it pre populate data it in view template
 	 * once post, it goes to update action
+	 *
+	 * @param  int  $resource_id
 	 * 
 	 * @return string view HTML
 	 */
@@ -103,6 +106,55 @@ class ItemsController extends MyController
 		return $response;
 	}
 
+	/**
+	 * to delete item by api call	 
+	 *
+	 * @param  int  $resource_id
+	 * 
+	 * @return string response
+	 */
+	public function deleteAction($resource_id): string
+	{
+		$url = $this->config::ITEM_API_URL.'/'.$resource_id;	
+		$method = 'DELETE';
+		
+		// api call
+		$response = $this->apihandler->callAPI($url, $method);
 
+		$response .= "<br/><br/><a href=./../../items>Go Back</a>";
+
+		return $response;
+	}
+
+	/**
+	 * to add a new item 	 
+	 * 
+	 * @return string response
+	 */
+	public function addAction(): string
+	{
+		// get view and render
+		$response = $this->getView('add');
+
+		if(!empty($_POST)){
+
+			$data['name'] = htmlspecialchars(strip_tags($_POST['name']));
+			$data['description'] = htmlspecialchars(strip_tags($_POST['description']));
+
+			// HTTP method
+			$method = 'POST';
+
+			// URL to api call
+			$url = $this->config::ITEM_API_URL;
+
+			// api call
+			$response = $this->apihandler->callAPI($url, $method, $data);
+
+			$response .= "<br/><br/><a href=./../items>Go Back</a>";
+
+		}
+
+		return $response;
+	}
 
 }

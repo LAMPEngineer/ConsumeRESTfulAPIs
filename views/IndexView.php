@@ -48,7 +48,7 @@ class IndexView
 					</table>";
 
 	
-		$response .= "<br/><br/><a href=./items/add/>Add An Item</a>";
+		$response .= "<br/><br/><a href=./items/add>Add An Item</a>";
 
 		return $response;
 	}

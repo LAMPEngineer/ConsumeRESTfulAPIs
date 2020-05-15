@@ -9,7 +9,7 @@ class ConsumeApi
 	 * Function to execute cURL
 	 * 
 	 * @param  string 	$url 		API call url
-	 * @param  string 	$method 	metho to use [POST, GET, PUT, etc]
+	 * @param  string 	$method 	metho to use [POST, GET, PUT, PATCH etc]
 	 * @param  array 	$data 		data to be pass (optionat)
 	 * 
 	 * @return array object    		response data in array
@@ -24,11 +24,16 @@ class ConsumeApi
 
 		 switch ($method) 
 		 {
+
 		 	case 'POST':
 		 		curl_setopt($client, CURLOPT_POST, 1);
+		 		if($data){
+		 		// Set the content type 
+		 		curl_setopt($client, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 
-		 		if($data)
-		 			curl_setopt($client, CURLOPT_POSTFIELDS, $data);
+		 		curl_setopt($client, CURLOPT_POSTFIELDS, json_encode($data));
+		 		}
+		 		
 		 		break;
 
 		 	case 'PUT':
@@ -40,6 +45,10 @@ class ConsumeApi
 		 		curl_setopt($client, CURLOPT_CUSTOMREQUEST, "PATCH");
 				curl_setopt($client, CURLOPT_POSTFIELDS, http_build_query($data));
 		 		break;
+
+		 	case 'DELETE':		 		
+		 		curl_setopt($client, CURLOPT_CUSTOMREQUEST, "DELETE");
+				break;
 
 		 	default:
 		 		if($data)
