@@ -34,8 +34,8 @@ class HandleApi
 	/**
 	 * Call API with url. This uses cURL to call api.
 	 * 
-	 * @return array 	data on success 		i.e 1
-	 *         string 	message on unsuccess 	i.e 0
+	 * @return array 	data on success 	 i.e 1
+	 *         string 	message on unsuccess i.e 0
 	 *         
 	 * @catch exception if fails.
 	 */
@@ -52,11 +52,11 @@ class HandleApi
     	$consumeapi = new ConsumeApi();
     	
     	try{
-				$response = $consumeapi->curlcall($this->url, $this->method, $this->data);
+			$response = $consumeapi->curlcall($this->url, $this->method, $this->data);
 
 			} catch(\Exception $e){
 
-				echo $e->getMessage();
+			echo $e->getMessage();
 			}
 
     	//if success i.e 1
@@ -66,7 +66,7 @@ class HandleApi
     		return $return;
 
     	} else {
-    				//error message
+    			//error message
     		return $response->message;
     	}
 

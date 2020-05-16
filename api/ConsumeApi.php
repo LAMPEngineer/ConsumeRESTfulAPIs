@@ -18,6 +18,9 @@ class ConsumeApi
 	 */
 	public function curlcall($url, $method, $data = false)
     {
+    	// to send data in JSON
+    	if($data) 
+    		$data = json_encode($data);
 
  		// init curl
 		 $client = curl_init($url);
@@ -28,22 +31,23 @@ class ConsumeApi
 		 	case 'POST':
 		 		curl_setopt($client, CURLOPT_POST, 1);
 		 		if($data){
-		 		// Set the content type 
-		 		curl_setopt($client, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-
-		 		curl_setopt($client, CURLOPT_POSTFIELDS, json_encode($data));
+		 		curl_setopt($client, CURLOPT_POSTFIELDS, $data);
 		 		}
 		 		
 		 		break;
 
 		 	case 'PUT':
 		 		curl_setopt($client, CURLOPT_CUSTOMREQUEST, "PUT");
-				curl_setopt($client, CURLOPT_POSTFIELDS, http_build_query($data));
+		 		if($data){
+				curl_setopt($client, CURLOPT_POSTFIELDS, $data);
+				}
 		 		break;
 
 		 	case 'PATCH':		 		
 		 		curl_setopt($client, CURLOPT_CUSTOMREQUEST, "PATCH");
-				curl_setopt($client, CURLOPT_POSTFIELDS, http_build_query($data));
+		 		if($data){
+				curl_setopt($client, CURLOPT_POSTFIELDS, $data);
+				}
 		 		break;
 
 		 	case 'DELETE':		 		
@@ -52,10 +56,15 @@ class ConsumeApi
 
 		 	default:
 		 		if($data)
-		 			sprintf("%s?%s", $url, http_build_query($data));
+		 		 	$url = sprintf("%s?%s", $url, http_build_query($data));
 		 		break;
 		 }
 
+
+		// Options
+		curl_setopt($client, CURLOPT_URL, $url);
+
+		curl_setopt($client, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 
 		curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
 
@@ -73,7 +82,7 @@ class ConsumeApi
 		curl_close($client);
 		
 
-		//JSON decode to the response
+		// decode JSON responce into array
 		 $result = json_decode($response);
 
 		 // return response 
