@@ -67,11 +67,11 @@ class RequestController
 	private function parseUri(): bool
 	{
 		// parse URI and get the controller, action and resource ID
-		$this->controller_name = ucfirst($this->url_elements[0]) . 'Controller';
+		$this->controller_name = ucfirst($this->url_elements[1]) . 'Controller';
 
-		$this->action_name = (!empty($this->url_elements[1]))?$this->url_elements[1]:'index';
+		$this->action_name = (!empty($this->url_elements[2]))?$this->url_elements[2]:'index';
 
-		$this->resource_id = (!empty($this->url_elements[2]))?$this->url_elements[2]:null;
+		$this->resource_id = (!empty($this->url_elements[3]))?$this->url_elements[3]:null;
 		return true;
 	}
 
