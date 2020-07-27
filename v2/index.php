@@ -13,6 +13,7 @@ use RequestController as Request;
 // request object
 $request = new Request();
 
+
 // get result
 echo $request->result;
 
