@@ -6,6 +6,11 @@
 class AuthController extends MyController
 {
 
+	private $token;
+
+	// setter & getter
+	public function setToken($token){$this->token = $token; }
+	public function getToken(){ return $this->token; }
 
 	public function indexAction(): string
 	{
@@ -16,12 +21,25 @@ class AuthController extends MyController
 		$data['password'] = 'admin123';
 
 		// api call
-		$response = $this->apihandler->callAPI($url, $method, $data);
+		$api_response = $this->apihandler->callAPI($url, $method, $data);
 
-		$response = "Message= ".$response['message']. " Status = ". $response['status']."jwt = ".$response['jwt'];
+		if(is_object($api_response)){
+			$this->token = $api_response->jwt;
+			//$response = "Login Successful";
 
+			$url = $this->config::ITEM_API_URL_V2;			
+			$method = 'GET';
+			$jwt_token = $this->token;
+
+			// api call
+			$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
+			$response = $content;
+
+		} else {
+			$response = $api_response;
+		}
+		
 		return $response;
-
 	}
-
+	
 }

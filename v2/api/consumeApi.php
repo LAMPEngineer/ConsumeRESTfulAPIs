@@ -16,7 +16,7 @@ class ConsumeApi
 	 * 
 	 * @throws Exception If cURL request fails.
 	 */
-	public function curlcall($url, $method, $data = false)
+	public function curlcall($url, $method, $data = false, $auth_token = false)
     {
     	// to send data in JSON
     	if($data) 
@@ -64,7 +64,10 @@ class ConsumeApi
 		// Options
 		curl_setopt($client, CURLOPT_URL, $url);
 
-		curl_setopt($client, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+		curl_setopt($client, CURLOPT_HTTPHEADER, array(
+			'Content-Type:application/json',
+			'Authorization: '. $auth_token
+		));
 
 		curl_setopt($client,CURLOPT_RETURNTRANSFER,true);
 

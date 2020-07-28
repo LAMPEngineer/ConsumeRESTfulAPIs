@@ -30,6 +30,14 @@ class HandleApi
 	 */
 	private $data = [];
 
+	/**
+	 * This is optional, if auth token need to 
+	 * pass with api call
+	 * 
+	 * @var string
+	 */
+	private $auth_token = '';
+
 
 	/**
 	 * Call API with url. This uses cURL to call api.
@@ -39,7 +47,7 @@ class HandleApi
 	 *         
 	 * @catch exception if fails.
 	 */
-	public function callAPI($url, $method, $data = false)
+	public function callAPI($url, $method, $data = false, $auth_token = false)
     {
 
 		$this->url = $url;
@@ -48,11 +56,13 @@ class HandleApi
 
 		$this->data = $data;
 
+		$this->auth_token = $auth_token;
+
     	// curl client class
     	$consumeapi = new ConsumeApi();
     	
     	try{
-			$response = $consumeapi->curlcall($this->url, $this->method, $this->data);
+			$response = $consumeapi->curlcall($this->url, $this->method, $this->data, $this->auth_token);
 
 			} catch(\Exception $e){
 
