@@ -13,4 +13,4 @@ App is built on core PHP 7.2.5, no data base and no any third party tools has be
 
 Used MVC architecture
 
-![flow_diagram.jpg](img/flow_diagram.jpg)
+![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
