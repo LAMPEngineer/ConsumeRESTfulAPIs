@@ -16,5 +16,5 @@ Used MVC architecture
 ![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
 
 
-# Microservice & JWT Work flow
+# Microservice & JWT work flow
 ![consume_api_auth_flow.jpg](img/consume_api_auth_flow.jpg)
