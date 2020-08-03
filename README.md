@@ -14,3 +14,7 @@ App is built on core PHP 7.2.5, no data base and no any third party tools has be
 Used MVC architecture
 
 ![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
+
+
+# Microservice & JWT Work flow
+![consume_api_auth_flow.jpg](img/consume_api_auth_flow.jpg)
