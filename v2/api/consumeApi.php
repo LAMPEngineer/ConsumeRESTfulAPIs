@@ -18,6 +18,7 @@ class ConsumeApi
 	 */
 	public function curlcall($url, $method, $data = false, $auth_token = false)
     {
+
     	// to send data in JSON
     	if($data) 
     		$data = json_encode($data);

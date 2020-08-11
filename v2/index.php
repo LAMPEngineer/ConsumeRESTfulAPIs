@@ -13,7 +13,18 @@ use RequestController as Request;
 // request object
 $request = new Request();
 
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ConsumeRESTfulAPIs</title>
+	</head>
+	<body>
+		<?php // get result
+			echo $request->result;
+		?>
+	</body>
+</html>
 
-// get result
-echo $request->result;
+
 

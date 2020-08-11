@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  Items controller to have actions for items
+ *  Auth controller to have actions for authentication
  */
 class AuthController extends MyController
 {
@@ -12,7 +12,7 @@ class AuthController extends MyController
 	public function setToken($token){$this->token = $token; }
 	public function getToken(){ return $this->token; }
 
-	public function indexAction(): string
+	public function indexAction() : bool
 	{
 		$url = $this->config::AUTH_LOGIN_URL_V2;			
 		$method = 'POST';
@@ -25,18 +25,22 @@ class AuthController extends MyController
 
 		if(is_object($api_response)){
 			$this->token = $api_response->jwt;
-			//$response = "Login Successful";
+			header("Location: ./items");
+			//exit();
+			$response = true;
 
-			$url = $this->config::ITEM_API_URL_V2;			
+			/*$url = $this->config::ITEM_API_URL_V2;			
 			$method = 'GET';
 			$jwt_token = $this->token;
 
 			// api call
 			$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
-			$response = $content;
+			var_dump($content);
+			die;
+			$response = $content;*/
 
 		} else {
-			$response = $api_response;
+			$response = false;
 		}
 		
 		return $response;

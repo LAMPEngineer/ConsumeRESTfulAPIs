@@ -12,18 +12,42 @@ class ItemsController extends MyController
 	 * 
 	 * @return string view HTML
 	 */
-	public function indexAction(): string
+	public function indexAction()
 	{
 
-		$url = $this->config::ITEM_API_URL_V2;			
-		$method = 'GET';
+		$url = $this->config::AUTH_LOGIN_URL_V2;			
+		$method = 'POST';
+		
+		//test...
+		$data['email']    = 'admin@gmail.com';
+		$data['password'] = 'admin123';
 		
 		// api call
-		$content = $this->apihandler->callAPI($url, $method);
+		$api_response = $this->apihandler->callAPI($url, $method, $data);
+		if(is_object($api_response)){
+			$jwt_token = $api_response->jwt;
+		}
 
-		// get view and render
-		$response = $this->getView('index', $content);
-	
+
+		if(!empty($jwt_token)){
+			$url = $this->config::ITEM_API_URL_V2;			
+			$method = 'GET';
+			// api call		
+			$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
+
+			if(is_array($content)){
+
+				// get view and render
+				$response  = $this->getView('index', $content);
+
+				//set JWT token to localStorage
+				$response .= "<script>localStorage.setItem('token', '".$jwt_token."');</script>";		
+			} else {
+				$response = $content;
+			}
+		} else {
+			$response = "JWT token not set!";
+		}	
 		return $response;
 
 	}
@@ -38,12 +62,15 @@ class ItemsController extends MyController
 	 */
 	public function getAction($resource_id)
 	{
-		$url = $this->config::ITEM_API_URL;	
+		//get JWT token back from localStorage
+		$jwt_token = print("<script>document.write(localStorage.getItem('token'));</script>"); 
+
+		$url = $this->config::ITEM_API_URL_V2;	
 		$url .= '/'.$resource_id;		
 		$method = 'GET';
 		
 		// api call
-		$content = $this->apihandler->callAPI($url, $method);
+		$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
 
 		// get view and render
 		$response = (is_object($content))? $this->getView('get', $content) : $content;
