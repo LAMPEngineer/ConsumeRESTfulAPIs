@@ -12,7 +12,7 @@ class ItemsController extends MyController
 	 * 
 	 * @return string view HTML
 	 */
-	public function indexAction()
+	public function indexAction(): string
 	{
 
 		$url = $this->config::AUTH_LOGIN_URL_V2;			
@@ -30,8 +30,9 @@ class ItemsController extends MyController
 
 
 		if(!empty($jwt_token)){
-			$url = $this->config::ITEM_API_URL_V2;			
+			$url = $this->api_url;			
 			$method = 'GET';
+
 			// api call		
 			$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
 
@@ -39,9 +40,9 @@ class ItemsController extends MyController
 
 				// get view and render
 				$response  = $this->getView('index', $content);
-
+/*
 				//set JWT token to localStorage
-				$response .= "<script>localStorage.setItem('token', '".$jwt_token."');</script>";		
+				$response .= "<script>localStorage.setItem('token', '".$jwt_token."');</script>";*/		
 			} else {
 				$response = $content;
 			}
@@ -60,21 +61,37 @@ class ItemsController extends MyController
 	 * 
 	 * @return string view HTML
 	 */
-	public function getAction($resource_id)
+	public function getAction($resource_id): string
 	{
-		//get JWT token back from localStorage
-		$jwt_token = print("<script>document.write(localStorage.getItem('token'));</script>"); 
-
-		$url = $this->config::ITEM_API_URL_V2;	
-		$url .= '/'.$resource_id;		
-		$method = 'GET';
+		$url = $this->config::AUTH_LOGIN_URL_V2;			
+		$method = 'POST';
+		
+		//test...
+		$data['email']    = 'admin@gmail.com';
+		$data['password'] = 'admin123';
 		
 		// api call
-		$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
+		$api_response = $this->apihandler->callAPI($url, $method, $data);
+		if(is_object($api_response)){
+			$jwt_token = $api_response->jwt;
+		}
 
-		// get view and render
-		$response = (is_object($content))? $this->getView('get', $content) : $content;
-	
+/*		//get JWT token back from localStorage
+		$jwt_token = print("<script>document.write(localStorage.getItem('token'));</script>"); */
+
+		if(!empty($jwt_token)){
+			$url = $this->api_url;	
+			$url .= '/'.$resource_id;		
+			$method = 'GET';
+			
+			// api call
+			$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
+
+			// get view and render
+			$response = (is_object($content))? $this->getView('get', $content) : $content;		
+		} else {
+			$response = "JWT token not set!";
+		}		
 		return $response;
 	}
 

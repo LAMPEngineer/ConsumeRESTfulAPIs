@@ -18,6 +18,7 @@ $request = new Request();
 <html>
 	<head>
 		<title>ConsumeRESTfulAPIs</title>
+		<link rel="stylesheet" type="text/css" href="./public/mystyle.css">
 	</head>
 	<body>
 		<?php // get result

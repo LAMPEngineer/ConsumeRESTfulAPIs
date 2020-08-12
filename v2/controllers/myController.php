@@ -9,14 +9,20 @@ class MyController
 	 * config variable
 	 * @var string
 	 */
-	public $config='';
+	protected $config='';
 
 	/**
 	 * to hold object of Handle API
 	 * 
 	 * @var object
 	 */
-	public $apihandler;
+	protected $apihandler;
+
+	/**
+	 * to hold api url
+	 * @var string
+	 */
+	protected $api_url;
 
 	/**
 	 * initialize config 
@@ -27,6 +33,8 @@ class MyController
 		$this->config = ucfirst('property') . 'Config';
 
 		$this->apiHandle();
+
+		$this->api_url = $this->config::ITEM_API_URL_V2;
 
 	}
 
