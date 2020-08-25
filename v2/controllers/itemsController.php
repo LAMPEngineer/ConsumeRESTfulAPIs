@@ -15,19 +15,8 @@ class ItemsController extends MyController
 	public function indexAction(): string
 	{
 
-		$url = $this->config::AUTH_LOGIN_URL_V2;			
-		$method = 'POST';
-		
-		//test...
-		$data['email']    = 'admin@gmail.com';
-		$data['password'] = 'admin123';
-		
-		// api call
-		$api_response = $this->apihandler->callAPI($url, $method, $data);
-		if(is_object($api_response)){
-			$jwt_token = $api_response->jwt;
-		}
-
+		// get jwt token from cookie		
+		$jwt_token = $_COOKIE['jwtaccesstoken'];
 
 		if(!empty($jwt_token)){
 			$url = $this->api_url;			
@@ -40,9 +29,8 @@ class ItemsController extends MyController
 
 				// get view and render
 				$response  = $this->getView('index', $content);
-/*
-				//set JWT token to localStorage
-				$response .= "<script>localStorage.setItem('token', '".$jwt_token."');</script>";*/		
+
+	
 			} else {
 				$response = $content;
 			}
@@ -63,22 +51,9 @@ class ItemsController extends MyController
 	 */
 	public function getAction($resource_id): string
 	{
-		$url = $this->config::AUTH_LOGIN_URL_V2;			
-		$method = 'POST';
+		// get jwt token from cookie		
+		$jwt_token = $_COOKIE['jwtaccesstoken'];
 		
-		//test...
-		$data['email']    = 'admin@gmail.com';
-		$data['password'] = 'admin123';
-		
-		// api call
-		$api_response = $this->apihandler->callAPI($url, $method, $data);
-		if(is_object($api_response)){
-			$jwt_token = $api_response->jwt;
-		}
-
-/*		//get JWT token back from localStorage
-		$jwt_token = print("<script>document.write(localStorage.getItem('token'));</script>"); */
-
 		if(!empty($jwt_token)){
 			$url = $this->api_url;	
 			$url .= '/'.$resource_id;		
@@ -105,14 +80,24 @@ class ItemsController extends MyController
 	 */
 	public function editAction($resource_id): string
 	{
-		$url = $this->config::ITEM_API_URL.'/'.$resource_id;	
-		$method = 'GET';
-		
-		// api call
-		$content = $this->apihandler->callAPI($url, $method);
+		// get jwt token from cookie		
+		$jwt_token = $_COOKIE['jwtaccesstoken'];
 
-		// get view and render
-		$response = $this->getView('edit', $content);
+		if(!empty($jwt_token)){
+			$url = $this->api_url;	
+			$url .= '/'.$resource_id;		
+			$method = 'GET';
+			
+			// api call
+			$content = $this->apihandler->callAPI($url, $method, false, $jwt_token);
+
+			// get view and render
+			$response = (is_object($content))? $this->getView('get', $content) : $content;
+			// get view and render
+			$response = $this->getView('edit', $content);
+		}else {
+			$response = "JWT token not set!";
+		}		
 
 		return $response;
 	}
@@ -134,19 +119,28 @@ class ItemsController extends MyController
 			$data['name'] = htmlspecialchars(strip_tags($_POST['name']));
 			$data['description'] = htmlspecialchars(strip_tags($_POST['description']));
 
+		// get jwt token from cookie		
+		$jwt_token = $_COOKIE['jwtaccesstoken'];
+		
+		if(!empty($jwt_token)){
+			$url = $this->api_url;	
+			$url .= '/'.$itemid;
 			// HTTP method
 			$method = 'PATCH';
 
-			// URL to api call
-			$url = $this->config::ITEM_API_URL.'/'.$itemid;
-
 			// api call
-			$response = $this->apihandler->callAPI($url, $method, $data);
+			$content = $this->apihandler->callAPI($url, $method, $data, $jwt_token);
 
+			// responce
+			$response = (is_object($content))? $content : $content;
+			
+			$response .= "<br/><br/><a href=./../items/get/".$itemid.">Show updated item</a>";
+
+		}else {
+			$response = "JWT token not set!";
 		}
 
-		$response .= "<br/><br/><a href=./../items/get/".$itemid.">Show updated item</a>";
-
+		}
 		return $response;
 	}
 
@@ -159,13 +153,20 @@ class ItemsController extends MyController
 	 */
 	public function deleteAction($resource_id): string
 	{
-		$url = $this->config::ITEM_API_URL.'/'.$resource_id;	
-		$method = 'DELETE';
-		
-		// api call
-		$response = $this->apihandler->callAPI($url, $method);
+		// get jwt token from cookie		
+		$jwt_token = $_COOKIE['jwtaccesstoken'];
 
-		$response .= "<br/><br/><a href=./../../items>Go Back</a>";
+		if(!empty($jwt_token)){			
+			$url = $this->api_url;	
+			$url .= '/'.$resource_id;
+			$method = 'DELETE';
+
+			// api call
+			$response = $this->apihandler->callAPI($url, $method, false, $jwt_token);
+			$response .= "<br/><br/><a href=./../../items>Go Back</a>";
+		} else {
+			$response = "JWT token not set!";
+		}
 
 		return $response;
 	}
@@ -177,6 +178,7 @@ class ItemsController extends MyController
 	 */
 	public function addAction(): string
 	{
+
 		// get view and render
 		$response = $this->getView('add');
 
@@ -184,17 +186,22 @@ class ItemsController extends MyController
 
 			$data['name'] = htmlspecialchars(strip_tags($_POST['name']));
 			$data['description'] = htmlspecialchars(strip_tags($_POST['description']));
-
+			// get jwt token from cookie		
+			$jwt_token = $_COOKIE['jwtaccesstoken'];
+			
+			if(!empty($jwt_token)){	
+			$url = $this->api_url;	
 			// HTTP method
 			$method = 'POST';
 
-			// URL to api call
-			$url = $this->config::ITEM_API_URL;
-
 			// api call
-			$response = $this->apihandler->callAPI($url, $method, $data);
+			$response = $this->apihandler->callAPI($url, $method, $data, $jwt_token);
 
 			$response .= "<br/><br/><a href=./../items>Go Back</a>";
+
+			} else {
+				$response = "JWT token not set!";
+			}
 
 		}
 

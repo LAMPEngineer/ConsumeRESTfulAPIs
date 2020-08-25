@@ -22,7 +22,7 @@ $request = new Request();
 	</head>
 	<body>
 		<?php // get result
-			echo $request->result;
+			echo $request->requestRoute();
 		?>
 	</body>
 </html>

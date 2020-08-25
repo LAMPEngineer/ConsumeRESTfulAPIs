@@ -31,8 +31,19 @@ class AuthController extends MyController
 			if(is_object($api_response)){
 			$this->token = $api_response->jwt;
 
-			header("Location: ./items");
-			exit();			
+			$items = new ItemsController();
+			$response = $items->indexAction();
+
+			
+			/**
+			 * Set JWT token to cookie
+			 * 
+			 * we can change the 15 in setcookie() to amount of days the cookie will expire in.
+			 * The "/" in setcookie is important, because it ensures the cookies will be available on every page the user visits on our website.
+			 * 
+			 */
+			setcookie('jwtaccesstoken',$this->token, time()+(3600 * 24 * 15),"/");
+
 			}
 
 		}

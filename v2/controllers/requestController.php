@@ -54,7 +54,7 @@ class RequestController
 
 		if($this->parseUri()){
 		// to route the request
-		$this->result = $this->requestRoute();	
+		//$this->result = $this->requestRoute();	
 
 		}
 	}
@@ -83,7 +83,7 @@ class RequestController
 	 * 
 	 * @return string  to view as output
 	 */
-	private function requestRoute()
+	public function requestRoute()
 	{
 		// check if controller exists
 		if(class_exists($this->controller_name)){
