@@ -87,16 +87,24 @@ class RequestController
 	{
 		// check if controller exists
 		if(class_exists($this->controller_name)){
-	
-			$controller = new $this->controller_name();
+		
+			$controller = null;
+
+			if($this->controller_name != 'authController'){
+				$controller = new $this->controller_name();				
+			}			
 
 			// get action
 			$action_name = strtolower($this->action_name);
 
 			$action = $action_name.'Action';
+			
+			$auth_obj = new AuthController();			
 
-			// call action
-			$result = $controller->$action($this->resource_id);	
+			$process_action = 'processRequest';
+
+			// route the request to the right place in auth
+			$result = $auth_obj->$process_action($action, $this->resource_id, $controller);
 
 			return $result;
 

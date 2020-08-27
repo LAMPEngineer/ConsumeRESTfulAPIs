@@ -25,6 +25,12 @@ class MyController
 	protected $api_url;
 
 	/**
+	 * to hold jwt token
+	 * @var string
+	 */
+	protected $jwt_token;
+
+	/**
 	 * initialize config 
 	 */
 	public function __construct()
@@ -37,6 +43,10 @@ class MyController
 		$this->api_url = $this->config::ITEM_API_URL_V2;
 
 	}
+
+	// setter & getter
+	public function setToken($jwt_token){$this->jwt_token = $jwt_token; }
+	public function getToken(){ return $this->jwt_token; }
 
 	/**
 	 * to get view object

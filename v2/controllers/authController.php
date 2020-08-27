@@ -32,6 +32,7 @@ class AuthController extends MyController
 			$this->token = $api_response->jwt;
 
 			$items = new ItemsController();
+			$items->setToken($this->token);
 			$response = $items->indexAction();
 
 			
@@ -46,6 +47,31 @@ class AuthController extends MyController
 
 			}
 
+		}
+
+		return $response;
+	}
+
+
+	public function processRequest($action, $resource_id, $controller=null): string
+	{
+		if(!empty($controller)){
+
+			// get jwt token from cookie		
+			$jwt_token = $_COOKIE['jwtaccesstoken'];
+
+			if(!empty($jwt_token)){
+
+				$controller->setToken($jwt_token);
+
+				$response = $controller->$action($resource_id);
+
+			} else {
+				$response = "JWT token not set!";
+			}
+			
+		}else{
+			$response = $this->$action();
 		}
 
 		return $response;
