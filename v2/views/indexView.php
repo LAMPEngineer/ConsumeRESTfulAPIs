@@ -7,18 +7,22 @@ class IndexView
 
 	/**
 	 * Resource list view 
-	 * @param  array $content 
+	 * @param array $content 
+	 * @param string $service 	Service name e.g items, users etc 
+	 * 
 	 * @return string       
 	 */
-	public function render($content)
+	public function render($content, $service)
 	{
+		//formating
+		$service_view = ucfirst($service);
 
-		$response = "<h1>Item List</h1>
+		$response = "<h1>". $service_view ." List</h1>
 					<table>
 						<thead>
 							<tr>
 								<th><u>#</u></th>
-								<th><u>Item</u></th>
+								<th><u>". $service_view ."</u></th>
 								<th><u>Action 1</u></th>
 								<th><u>Action 2</u></th>
 								<th><u>Action 3</u></th>
@@ -32,13 +36,13 @@ class IndexView
 				   					<td>".++$i."</td>
 									<td>".$resource->name."</td>
 									<td>				
-										<a href='./items/get/".$resource->id."'>Show</a>
+										<a href='./". $service."/get/".$resource->id."'>Show</a>
 									</td>
 									<td>				
-										<a href='./items/edit/".$resource->id."'>Edit</a>
+										<a href='./". $service ."/edit/".$resource->id."'>Edit</a>
 									</td>
 									<td>				
-										<a href='./items/delete/".$resource->id."'>Delete</a>
+										<a href='./" .$service. "/delete/".$resource->id."'>Delete</a>
 									</td>
 								</tr>";
 							}
@@ -48,7 +52,7 @@ class IndexView
 					</table>";
 
 	
-		$response .= "<br/><br/><a href=./items/add>Add An Item</a>";
+		$response .= "<br/><br/><a href=./". $service."/add>Add An Resource</a>";
 
 		return $response;
 	}

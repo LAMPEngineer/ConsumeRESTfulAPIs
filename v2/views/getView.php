@@ -8,19 +8,43 @@ class GetView
 
 	/**
 	 * Resource view 
-	 * @param  array $content 
+	 * @param array $content 
+	 * @param string $service 	Service name e.g items, users etc 
+	 * 
 	 * @return string       
 	 */
-	public function render($content)
+	public function render($content, $service)
 	{
-		$response = "<h1>".$content->name."</h1>
-						<p>".$content->description."</p>
-						<hr>
-						<p>Created at : ".$content->created_at."</p>
-						<p>Updated at : ".$content->updated_at."</p>
+		//formating
+		$service_view = ucfirst($service);
+
+		$response = "<h1>".$content->name."</h1>";
+
+// view according to service			
+switch ($service) {
+
+	case 'items':
+		$response .= "<p>". $content->description ."</p>";
+		break;
+
+	case 'users':
+		$response .= "<p>Email: ". $content->email ."</p>
+					  <hr>
+						<p>Created by : ". $content->created_by ."</p>
+						<p>Updated by : ". $content->updated_by ."</p>";
+		break;
+
+	default:
+		# code...
+		break;
+}
+
+		$response .="<hr>
+						<p>Created at : ". $content->created_at ."</p>
+						<p>Updated at : ". $content->updated_at ."</p>
 					";
 
-		$response .= "<br/><br/><a href=./../../items>Go Back</a>";
+		$response .= "<br/><br/><a href=./../../". $service .">Go Back</a>";
 
 		return $response;
 

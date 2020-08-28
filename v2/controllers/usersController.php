@@ -1,9 +1,9 @@
 <?php
 
 /*
- *  Items controller to have actions for items
+ *  Users controller to have actions for users
  */
-class ItemsController extends MyController
+class UsersController extends MyController
 {
 
 	/**
@@ -12,10 +12,9 @@ class ItemsController extends MyController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->api_url = $this->config::ITEM_API_URL_V2;
-		$this->microservice = 'items';
+		$this->api_url = $this->config::USER_API_URL_V2;
+		$this->microservice = 'users';
 	}
-
 
 
 	/**
@@ -29,10 +28,11 @@ class ItemsController extends MyController
 		if(!empty($_POST)){
 
 			// collect POST data and make data array
-			$resource_id			= (int)$_POST['id'];
-			$data['id']				= $resource_id;
-			$data['name']			= htmlspecialchars(strip_tags($_POST['name']));
-			$data['description']	= htmlspecialchars(strip_tags($_POST['description']));
+			$resource_id		= (int)$_POST['id'];
+			$data['id']			= $resource_id;
+			$data['name']		= htmlspecialchars(strip_tags($_POST['name']));
+			$data['email']		= htmlspecialchars(strip_tags($_POST['email']));
+			$data['password']	= htmlspecialchars(strip_tags($_POST['password']));
 			
 			$this->data = $data;
 			$response = parent::updateAction();
@@ -41,7 +41,6 @@ class ItemsController extends MyController
 		
 		return $response;		
 	}
-
 
 
 	/**
@@ -55,12 +54,13 @@ class ItemsController extends MyController
 		$response = $this->getView('add');
 
 		if(!empty($_POST)){
-			$data['name']			= htmlspecialchars(strip_tags($_POST['name']));
-			$data['description']	= htmlspecialchars(strip_tags($_POST['description']));
+			$data['name']		= htmlspecialchars(strip_tags($_POST['name']));
+			$data['email'] 		= htmlspecialchars(strip_tags($_POST['email']));
+			$data['password']	= htmlspecialchars(strip_tags($_POST['password']));
+
 			$this->data = $data;
 
 			$response = parent::addAction();	
-
 		}
 
 		return $response;

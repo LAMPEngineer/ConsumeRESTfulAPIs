@@ -34,12 +34,12 @@ class MyController
 	protected $jwt_token;
 
 	/**
-	 * to hold controller initial name
+	 * to hold microservice name
 	 * i.e items, users, etc.
 	 * 
 	 * @var string
 	 */
-	protected $controller_name;
+	protected $microservice;
 
 	/**
 	 * to hold data array to be post with
@@ -164,7 +164,7 @@ class MyController
 		// responce
 		$response = (is_object($content))? $content : $content;
 		
-		$response .= "<br/><br/><a href=./../".$this->controller_name."/get/".$this->data['id'].">Show updation</a>";
+		$response .= "<br/><br/><a href=./../". $this->microservice ."/get/".$this->data['id'].">Show updation</a>";
 
 
 		return $response;
@@ -187,7 +187,7 @@ class MyController
 
 		// api call
 		$response = $this->apihandler->callAPI($url, $method, false, $this->jwt_token);
-		$response .= "<br/><br/><a href=./../../".$this->controller_name.">Go Back</a>";
+		$response .= "<br/><br/><a href=./../../". $this->microservice .">Go Back</a>";
 		
 		return $response;
 	}
@@ -208,7 +208,7 @@ class MyController
 		// api call
 		$response = $this->apihandler->callAPI($url, $method, $this->data, $this->jwt_token);
 
-		$response .= "<br/><br/><a href=./../".$this->controller_name.">Go Back</a>";	
+		$response .= "<br/><br/><a href=./../". $this->microservice .">Go Back</a>";	
 
 		return $response;
 	}
@@ -234,7 +234,7 @@ class MyController
 			$view = new $view_name();	
 		}
 
-		$response = $view->render($content);
+		$response = $view->render($content, $this->microservice);
 
 		return $response;
 
