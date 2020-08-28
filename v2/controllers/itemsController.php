@@ -6,87 +6,22 @@
 class ItemsController extends MyController
 {
 
-	/**
-	 * to get all items by api call
-	 * and list it in view template
-	 * 
-	 * @return string view HTML
-	 */
-	public function indexAction(): string
-	{
-		$url = $this->api_url;			
-		$method = 'GET';
-
-		// api call		
-		$content = $this->apihandler->callAPI($url, $method, false, $this->jwt_token);
-
-		if(is_array($content)){
-
-			// get view and render
-			$response  = $this->getView('index', $content);
-
-
-		} else {
-			$response = $content;
-		}
-		
-		return $response;
-
-	}
 
 	/**
-	 * to get item by api call
-	 * and show it in view template
-	 *
-	 * @param  int  $resource_id
-	 * 
-	 * @return string view HTML
+	 * initialize config 
 	 */
-	public function getAction($resource_id): string
+	public function __construct()
 	{
-
-		$url = $this->api_url;	
-		$url .= '/'.$resource_id;		
-		$method = 'GET';
-		
-		// api call
-		$content = $this->apihandler->callAPI($url, $method, false, $this->jwt_token);
-
-		// get view and render
-		$response = (is_object($content))? $this->getView('get', $content) : $content;		
-			
-		return $response;
-	}
-
-	/**
-	 * to edit item by id. it pre populate data it in view template
-	 * once post, it goes to update action
-	 *
-	 * @param  int  $resource_id
-	 * 
-	 * @return string view HTML
-	 */
-	public function editAction($resource_id): string
-	{
-		$url = $this->api_url;	
-		$url .= '/'.$resource_id;		
-		$method = 'GET';
-		
-		// api call
-		$content = $this->apihandler->callAPI($url, $method, false, $this->jwt_token);
-
-		// get view and render
-		$response = (is_object($content))? $this->getView('get', $content) : $content;
-		// get view and render
-		$response = $this->getView('edit', $content);
-			
-		return $response;
+		parent::__construct();
+		$this->api_url = $this->config::ITEM_API_URL_V2;
+		$this->controller_name = 'items';
 	}
 
 
+
 	/**
-	 * after submit edited data comes here for update action
-	 * it sends data through api handler
+	 * after submit edited data, it comes here for update action
+	 * and sends data through api handler
 	 * 
 	 * @return string view HTML
 	 */
@@ -95,50 +30,22 @@ class ItemsController extends MyController
 		if(!empty($_POST)){
 
 			// collect POST data and make data array
-			$itemid = (int)$_POST['id'];
-			$data['id'] = $itemid;
+			$resource_id = (int)$_POST['id'];
+			$data['id'] = $resource_id;
 			$data['name'] = htmlspecialchars(strip_tags($_POST['name']));
 			$data['description'] = htmlspecialchars(strip_tags($_POST['description']));
-
-			$url = $this->api_url;	
-			$url .= '/'.$itemid;
-			// HTTP method
-			$method = 'PATCH';
-
-			// api call
-			$content = $this->apihandler->callAPI($url, $method, $data, $this->jwt_token);
-
-			// responce
-			$response = (is_object($content))? $content : $content;
+			$this->data = $data;
+			$response = parent::updateAction();
 			
-			$response .= "<br/><br/><a href=./../items/get/".$itemid.">Show updated item</a>";
 		}
-
-		return $response;
-	}
-
-	/**
-	 * to delete item by api call	 
-	 *
-	 * @param  int  $resource_id
-	 * 
-	 * @return string response
-	 */
-	public function deleteAction($resource_id): string
-	{
-		$url = $this->api_url;	
-		$url .= '/'.$resource_id;
-		$method = 'DELETE';
-
-		// api call
-		$response = $this->apihandler->callAPI($url, $method, false, $this->jwt_token);
-		$response .= "<br/><br/><a href=./../../items>Go Back</a>";
 		
-		return $response;
+		return $response;		
 	}
 
+
+
 	/**
-	 * to add a new item 	 
+	 * to add a new resource 	 
 	 * 
 	 * @return string response
 	 */
@@ -150,19 +57,14 @@ class ItemsController extends MyController
 		if(!empty($_POST)){
 			$data['name'] = htmlspecialchars(strip_tags($_POST['name']));
 			$data['description'] = htmlspecialchars(strip_tags($_POST['description']));
-	
-			$url = $this->api_url;	
-			// HTTP method
-			$method = 'POST';
+			$this->data = $data;
 
-			// api call
-			$response = $this->apihandler->callAPI($url, $method, $data, $this->jwt_token);
-
-			$response .= "<br/><br/><a href=./../items>Go Back</a>";	
+			$response = parent::addAction();	
 
 		}
 
 		return $response;
 	}
+
 
 }

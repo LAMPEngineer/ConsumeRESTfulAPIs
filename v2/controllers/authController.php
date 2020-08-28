@@ -64,6 +64,7 @@ class AuthController extends MyController
 
 				$controller->setToken($jwt_token);
 
+				// route to controller action
 				$response = $controller->$action($resource_id);
 
 			} else {
