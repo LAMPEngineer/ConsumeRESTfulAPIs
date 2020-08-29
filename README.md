@@ -9,9 +9,9 @@ Use case - list items, show detail of an item, edit item and user could delete i
 App is built on core PHP 7.2.5, no data base and no any third party tools has been used.
 
 
-# Microservices Architecture
+# System Design
 
-Used microservices architecture
+Used MVC pattern
 
 ![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
 
