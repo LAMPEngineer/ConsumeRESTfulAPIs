@@ -11,8 +11,6 @@ App is built on core PHP 7.2.5, no data base and no any third party tools has be
 
 # System Design
 
-Used MVC pattern
-
 ![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
 
 
@@ -20,9 +18,14 @@ Used MVC pattern
 ![consume_api_auth_flow.jpg](img/consume_api_auth_flow.jpg)
 
 
+# Microservices Architecture
+
+![microservices.jpg](img/microservices.jpg)
+
+
 # Features
 
-- [x] MVC Architecture
-- [X] Microservices
+- [X] Microservices Architecture
+- [x] MVC Pattern
 - [X] JWT Authentication
 - [X] No Sessions
