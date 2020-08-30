@@ -9,18 +9,22 @@ Use case - list items, show detail of an item, edit item and user could delete i
 App is built on core PHP 7.2.5, no data base and no any third party tools has been used.
 
 
-# System Design
 
-![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
+# Microservices Architecture
+
+![microservices.jpg](img/microservices.jpg)
+
 
 
 # JWT work flow
 ![consume_api_auth_flow.jpg](img/consume_api_auth_flow.jpg)
 
 
-# Microservices Architecture
 
-![microservices.jpg](img/microservices.jpg)
+# System Design
+
+![architecture_consume_api.jpg](img/architecture_consume_api.jpg)
+
 
 
 # Features
