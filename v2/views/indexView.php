@@ -36,13 +36,13 @@ class IndexView
 				   					<td>".++$i."</td>
 									<td>".$resource->name."</td>
 									<td>				
-										<a href='./". $service."/get/".$resource->id."'>Show</a>
+										<a href='/ConsumeRESTfulAPIs/v2/". $service."/get/".$resource->id."'>Show</a>
 									</td>
 									<td>				
-										<a href='./". $service ."/edit/".$resource->id."'>Edit</a>
+										<a href='/ConsumeRESTfulAPIs/v2/". $service ."/edit/".$resource->id."'>Edit</a>
 									</td>
 									<td>				
-										<a href='./" .$service. "/delete/".$resource->id."'>Delete</a>
+										<a href='/ConsumeRESTfulAPIs/v2/" .$service. "/delete/".$resource->id."'>Delete</a>
 									</td>
 								</tr>";
 							}

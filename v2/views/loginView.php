@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Add view 
+ *  Login view 
  */
 class LoginView
 {

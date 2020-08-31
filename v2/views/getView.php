@@ -24,14 +24,14 @@ class GetView
 switch ($service) {
 
 	case 'items':
-		$response .= "<p>". $content->description ."</p>";
+		$response .= "<p>". $content->description ."</p>
+						<hr>
+						<p>Created by : ". $content->created_by ."</p>
+						<p>Updated by : ". $content->updated_by ."</p>";
 		break;
 
 	case 'users':
-		$response .= "<p>Email: ". $content->email ."</p>
-					  <hr>
-						<p>Created by : ". $content->created_by ."</p>
-						<p>Updated by : ". $content->updated_by ."</p>";
+		$response .= "<p>Email: ". $content->email ."</p>";
 		break;
 
 	default:

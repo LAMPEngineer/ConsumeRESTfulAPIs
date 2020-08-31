@@ -72,6 +72,18 @@ class MyController
 
 
 	/**
+	 * dashboard action
+	 * 
+	 * @return string view HTML
+	 */
+	/*public function dashboardAction(): string
+	{
+		$response = $this->getView('dashboard');
+
+		return $response;
+	}*/
+
+	/**
 	 * to get all resources by api call
 	 * and list it in view template
 	 * 
