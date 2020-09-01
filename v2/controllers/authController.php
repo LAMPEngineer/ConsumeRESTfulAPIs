@@ -29,8 +29,9 @@ class AuthController extends MyController
 	 */
 	public function indexAction(): string
 	{
+		$response = (!empty($this->token)) ? $this->dashboardAction() : $this->getView('login');
 		// get view and render
-		$response = $this->getView('login');
+		//$response = $this->getView('login');
 
 		if(!empty($_POST)){
 
@@ -101,8 +102,8 @@ class AuthController extends MyController
 
 			} else {
 				// "JWT token not set!" - route to login
-				$response = $this->$action();
-							
+				$response = $this->indexAction();
+				}			
 		}else{
 			// route to login
 			$response = $this->$action();
