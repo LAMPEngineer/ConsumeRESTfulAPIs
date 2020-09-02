@@ -1,6 +1,6 @@
 # Business requirement
 
-Machine-To-Mechine communication for multiple microservices using JWT authentication.
+Machine-To-Machine communication for multiple microservices using JWT authentication.
 
 This app consumes RESTful APIs to collect JSON data, apply bussiness logic and response back. Machine to machine communication uses JWT token authentication & no any sessions needed.
 
