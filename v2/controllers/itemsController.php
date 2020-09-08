@@ -3,7 +3,7 @@
 /*
  *  Items controller to have actions for items
  */
-class ItemsController extends MyController
+class ItemsController extends MyController implements ControllerInterface
 {
 
 	/**

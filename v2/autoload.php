@@ -17,5 +17,9 @@ function apiAutoload($classname)
 		return true;
 	} elseif (preg_match('/[a-zA-Z]+Config$/', $classname)) {
 		include __DIR__ . './../configs/' . $classname . '.php';
+		return true;
+	}elseif (preg_match('/[a-zA-Z]+Interface$/', $classname)) {
+		include __DIR__ . '/interfaces/' . $classname . '.php';
+		return true;
 	}
 }

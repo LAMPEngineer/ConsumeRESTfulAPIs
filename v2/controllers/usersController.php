@@ -3,7 +3,7 @@
 /*
  *  Users controller to have actions for users
  */
-class UsersController extends MyController
+class UsersController extends MyController implements ControllerInterface
 {
 
 	/**
