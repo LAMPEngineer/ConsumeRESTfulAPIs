@@ -31,6 +31,7 @@ App is built on core PHP 7.2.5, no data base and no any third party tools has be
 # Features
 
 - [X] Microservices Architecture
+- [X] Loose Coupling and High Cohesion
 - [x] MVC Pattern
 - [X] JWT Authentication
 - [X] No Sessions
