@@ -1,4 +1,4 @@
-# Business requirement
+# Consume RESTful APIs 
 
 Machine-To-Machine communication for multiple microservices using JWT authentication.
 
