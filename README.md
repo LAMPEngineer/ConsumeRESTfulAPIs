@@ -7,7 +7,7 @@ This app consumes RESTful APIs to collect JSON data, apply bussiness logic and r
 
 # Built
 
-App is built on core PHP 7.2.5, no data base and no any third party tools has been used.
+App is built on core PHP 8.0.9, no data base and no any third party tools has been used.
 
 
 
